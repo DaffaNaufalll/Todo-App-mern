@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  server:
+    build: ./server
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/mern
+    depends_on:
+      - mongo
+  client:
+    build: ./Client
+    ports:
+      - "5174:80"
+    depends_on:
+      - server
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
